@@ -73,3 +73,4 @@ RNTester/build
 .expo/*
 .vscode/*
 npm-debug.*
+.babelrc
