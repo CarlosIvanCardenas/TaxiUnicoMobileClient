@@ -1,51 +1,45 @@
 import React, {Component} from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text, AppRegistry, Image, TextInput, Keyboard, Button, Alert } from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Iniciar_sesion from "./Navigator/Iniciar_sesion"
-import {NativeRouter,Switch,Route} from "react-router-native";
 import Registrarse from './Navigator/Registrarse';
 import Prueba from './Navigator/Prueba';
+import Home from './Navigator/Home';
+import {Scene, Router, Actions, Drawer} from 'react-native-router-flux';
 
 export default class App extends Component{
-
-  render(){
+  render() {
+    return (
+      <Router  >
+        <Scene key="root">
+          <Scene key="Iniciar_sesion" component={Iniciar_sesion} title="Login" initial={true} hideNavBar={true} />
+          <Scene key="Registrarse" component={Registrarse} title="Sign Up" hideNavBar={true} />
+          <Scene key="Home" component={Home} title="Nuevo viaje" hideNavBar={true}  />
+        </Scene>
+      </Router>
+    )
+  }
+  /*render(){
     return(
-      /*<NativeRouter>
+      <NativeRouter>
         <Switch> 
           <Route exact path="/" component={Iniciar_sesion}/>  
           <Route exact path="/Registrarse" component={Registrarse}/>
         </Switch>
-      </NativeRouter>*/
-        <Prueba/>
+      </NativeRouter>
+        //<Iniciar_sesion/>
     );
-  }
+  }*/
+  
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'blue',
+  navBar: {
+    backgroundColor: '#1f2229', 
+    paddingLeft: 20
   },
-  elementsContainer: {
-    flex: 1,
-    backgroundColor: 'white',
-    marginTop: 24,
-    marginRight: 0,
-    marginBottom: 0
-  },
-  iniciosesion: {
-    fontWeight: 'bold',
+  navTitle: {
     color: 'white',
-    fontSize: 40,
-    textAlign: 'right',
-    lineHeight: 150,
-    marginRight: 24,
-    marginBottom: -25
+      fontSize: 20,
+      fontWeight: 'bold',
   },
-  iniciosesion1: {
-    fontWeight: 'bold',
-    color: 'white',
-    fontSize:30,
-    textAlign: 'center',
-    marginBottom:24
-  }
 });

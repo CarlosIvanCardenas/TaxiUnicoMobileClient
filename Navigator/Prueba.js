@@ -1,7 +1,20 @@
 import React, {Component} from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text, AppRegistry, Image, TextInput, Keyboard, Button, Alert, TouchableOpacity } from 'react-native';
 
-
+const hola = () => {
+  //Alert.alert('You tapped the button!')
+  let ws = new WebSocket('ws://206.189.164.14/ws');
+  //Alert.alert(ws)
+  ws.onopen = () => {
+    // connection opened
+    ws.send('something'); // send a message
+  };
+  ws.onmessage = (e) => {
+    // a message was received
+    console.log(e.data);
+  };
+  
+} 
 
 export default ({history}) => (
 
@@ -25,7 +38,7 @@ export default ({history}) => (
         />
         <View style={{marginTop: 40, backgroundColor: '#FFC336', width: 250, borderRadius: 20}}>
           <Button
-            onPress={this._onPressButton}
+            onPress={hola}
             title="boton"
             color='white'
           />
@@ -33,7 +46,7 @@ export default ({history}) => (
 
         </View> 
 
-        <View style={{backgroundColor: 'owhite', flex: 1}}>
+        <View style={{backgroundColor: 'white', flex: 1}}>
         </View> 
     </View>
     

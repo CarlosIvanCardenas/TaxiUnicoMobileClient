@@ -1,82 +1,177 @@
 import React, {Component} from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text, AppRegistry, Image, TextInput, Keyboard, Button, Alert, TouchableOpacity } from 'react-native';
+import {StyleSheet, View, Text, Image, TextInput, Button, Alert, TouchableOpacity, ScrollView} from 'react-native';
+import { Actions } from "react-native-router-flux";
 
-/*_onPressButton() {
-    Alert.alert('You tapped the button!');
-  };*/
+  const newPost = post => {
 
-export default ({history}) => (
+    fetch('http://206.189.164.14:80/api/clientes', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(post),
+  }).then((response) => response.json())
+      .then((responseJson) => {
+        return responseJson.movies;
+      })
+      .catch((error) => {
+        console.error(error);
+      });  
+  }
 
-    <View style={{flex: 1}}>
-    
+  class Registrarse extends Component{
+    constructor(props) {
+        super(props);
+        this.state = { 
+        nombre: '',
+        apellidos:'',
+        direccion:'',
+        correo: '',
+        telefono:'',
+        contraseña: '',
+        valcontraseña:''};
+    }
+
+    signup() {
+      var data = {
+        'correo': this.state.correo,
+        'contraseña': this.state.contraseña,
+        'primerNombre': this.state.nombre,
+        'apellidos': this.state.apellidos,
+        'telefono': this.state.telefono,
+        'direccion': this.state.direccion,
+        'estatus': "Activo"
+    }
+
+      if(this.state.correo == ''||this.state.contraseña ==''||this.state.nombre==''||this.state.apellidos==''||this.state.telefono==''||this.state.direccion==''){
+        Alert.alert('Hace falta llenar algunos campos');
+        return;
+      }
+
+      if(this.state.contraseña != this.state.valcontraseña){
+        Alert.alert('Tu contraseña no coincide');
+        return;
+      }
       
-      <View style={{backgroundColor: 'white', flex: .26}}>
-      </View> 
+      newPost(data)
+      Alert.alert('¡Bienvenido!');
+      Actions.Home()
+      //getPost()
+      //console.log()
+    }
 
+    render(){
+      return(
+        <View style={{flex: 1}}>
+    
+          <View style={{backgroundColor: 'white', flex: .26}}>
+          </View> 
 
-      <View style={{backgroundColor: '#53B4FF', flex: 1.92}}>
-        <Image style={{width: 100,height: 100, marginBottom: -120, marginTop: 20, marginLeft: 15}}
-            
-            source={require('../assets/images/logo.png')}
-          />
-          <Text style={styles.iniciosesion}>TAXI UNICO</Text>
-          <Text style={styles.iniciosesion1}>Crea una cuenta</Text>
-      </View> 
+          <View style={{backgroundColor: '#53B4FF', flex: 2.2}}>
+            <Image style={{width: 100,height: 100, marginBottom: -120, marginTop: 20, marginLeft: 15}}
+              source={require('../assets/images/logo.png')}
+            />
+            <Text style={styles.iniciosesion}>TAXI UNICO</Text>
+            <Text style={styles.iniciosesion1}>Crea una cuenta</Text>
+          </View> 
 
+          <View style={{backgroundColor: 'white', flex: 4, alignItems: 'center'}}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flexGrow: 1}}>
+              <Text style={styles.campos}>Nombre</Text>
+              <TextInput
+                style={styles.llenar}
+                placeholder="Ingresa tu nombre"
+                placeholderTextColor='#53B4FF'
+                autoCapitalize='words'
+                onChangeText={(nombre) => this.setState({nombre})}
+                value={this.state.nombre}
+              />
 
-      <View style={{backgroundColor: 'white', flex: 5, alignItems: 'center'}}>
-        <Text style={styles.campos}>Nombre</Text>
-          <TextInput
-            style={styles.llenar}
-            placeholder="Ingresa tu nombre de usuario"
-            placeholderTextColor='#53B4FF'
-            onChangeText={(text) => this.setState({text})}
-          />
-        <Text style={styles.campos}>Correo electrónico</Text>
-          <TextInput
-            style={styles.llenar}
-            placeholder="Ingresa tu correo electrónico"
-            placeholderTextColor='#53B4FF'
-            onChangeText={(text) => this.setState({text})}
-          />
-        <Text style={styles.campos}>Teléfono</Text>
-          <TextInput
-            style={styles.llenar}
-            placeholder="Ingresa tu número de teléfono"
-            placeholderTextColor='#53B4FF'
-            onChangeText={(text) => this.setState({text})}
-          />
-        <Text style={styles.campos}>Contraseña</Text>
-          <TextInput
-            style={styles.llenar}
-            placeholder="Ingresa tu contraseña"
-            placeholderTextColor='#53B4FF'
-            onChangeText={(text) => this.setState({text})}
-          />
-        <Text style={styles.campos}>Valida tu contraseña</Text>
-          <TextInput
-            style={styles.llenar}
-            placeholder="Ingresa otra vez tu contraseña"
-            placeholderTextColor='#53B4FF'
-            onChangeText={(text) => this.setState({text})}
-          />
-        <View style={{marginTop: 20, backgroundColor: '#FFC336', width: 250, borderRadius: 20}}>
-          <Button
-            //onPress={() => history.push("/Registrarse")}
-            title="Registrarse"
-            color='white'
-          />
+              <Text style={styles.campos}>Apellidos</Text>
+              <TextInput
+                style={styles.llenar}
+                placeholder="Ingresa tus apellidos"
+                placeholderTextColor='#53B4FF'
+                autoCapitalize='words'
+                onChangeText={(apellidos) => this.setState({apellidos})}
+                value={this.state.apellidos}
+              />
+
+              <Text style={styles.campos}>Correo electrónico</Text>
+              <TextInput
+                style={styles.llenar}
+                placeholder="Ingresa tu correo electrónico"
+                placeholderTextColor='#53B4FF'
+                autoCapitalize='none'
+                onChangeText={(correo) => this.setState({correo})}
+                value={this.state.correo}
+              />
+
+              <Text style={styles.campos}>Teléfono</Text>
+              <TextInput
+                style={styles.llenar}
+                placeholder="Ingresa tu número de teléfono"
+                placeholderTextColor='#53B4FF'
+                keyboardType='numeric'
+                onChangeText={(telefono) => this.setState({telefono})}
+                value={this.state.telefono}
+              />
+
+              <Text style={styles.campos}>Dirección</Text>
+              <TextInput
+                style={styles.llenar}
+                placeholder="Ingresa tu dirección"
+                placeholderTextColor='#53B4FF'
+                autoCapitalize='sentences'
+                onChangeText={(direccion) => this.setState({direccion})}
+                value={this.state.direccion}
+              />
+
+              <Text style={styles.campos}>Contraseña</Text>
+              <TextInput
+                style={styles.llenar}
+                placeholder="Ingresa tu contraseña"
+                placeholderTextColor='#53B4FF'
+                autoCapitalize='none'
+                secureTextEntry={true}
+                onChangeText={(contraseña) => this.setState({contraseña})}
+                value={this.state.contraseña}
+              />
+
+              <Text style={styles.campos}>Valida tu contraseña</Text>
+              <TextInput
+                style={styles.llenar}
+                placeholder="Ingresa otra vez tu contraseña"
+                placeholderTextColor='#53B4FF'
+                autoCapitalize='none'
+                secureTextEntry={true}
+                onChangeText={(valcontraseña) => this.setState({valcontraseña})}
+                value={this.state.valcontraseña}
+              />
+            </ScrollView>
+          </View>
+
+          <View style={{flex:1.6, backgroundColor:'white', alignItems: 'center'}}>
+            <View style={{marginTop: 20, backgroundColor: '#FFC336', width: 250, borderRadius: 20, alignItems: 'center'}}>
+              <Button
+                onPress={this.signup.bind(this)}
+                title="Registrarse"
+                color='white'
+              />
+            </View>
+
+            <View style={{ backgroundColor: 'white',alignItems: 'center',marginTop: 20}}>
+              <Text style={{fontSize: 14}}>¿Ya tienes cuenta?</Text>
+              <TouchableOpacity style={{marginTop:5}} onPress={() => Actions.Iniciar_sesion()}>
+                <Text style={{textDecorationLine:'underline', color: '#53B4FF'}}>Inicia sesión</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-
-        <View style={{flex:1, backgroundColor: 'white',alignItems: 'center',marginTop: 10}}>
-          <Text style={{fontSize: 14}}>¿Ya tienes cuenta?</Text>
-          <TouchableOpacity style={{marginTop:5}} onPress={() => history.push("/")}>
-            <Text style={{textDecorationLine:'underline', color: '#53B4FF'}}>Inicia sesión</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
-  );
+      )
+    }
+  }
 
 
 const styles = StyleSheet.create({
@@ -99,7 +194,7 @@ const styles = StyleSheet.create({
   campos: {
     textAlign: 'center', 
     marginTop: 10, 
-    fontSize: 30
+    fontSize: 24
   },
   llenar: {
     height: 20, 
@@ -111,3 +206,5 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 });
+
+module.exports = Registrarse;
