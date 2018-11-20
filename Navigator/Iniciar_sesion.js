@@ -2,10 +2,15 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TextInput, Button, Alert, TouchableOpacity} from 'react-native';
 import { Actions } from "react-native-router-flux";
 
-  class Iniciar_sesion extends Component{
+  export default class Iniciar_sesion extends Component{
     constructor(props) {
         super(props);
-        this.state = { correo: '',contraseña: ''};
+        this.state = {
+          correo: 'flimflo2@hotmail.com',
+          contraseña: '12345',
+          nombre:'',
+          IDCliente: '',
+        };
     }
 
     _onPressButton() {
@@ -18,7 +23,14 @@ import { Actions } from "react-native-router-flux";
         if(response.ok){
           let responseJson = await response.json();
           if (responseJson != null) {
-            Actions.Home()
+
+            //Actions.postviaje({text: responseJson.id});
+            //console.log(responseJson.primerNombre + " " + responseJson.apellidos)
+
+            this.setState({nombre: responseJson.primerNombre + " " + responseJson.apellidos}) 
+            console.log(this.state.nombre)
+            //Actions.Menu({data:this.state.nombre})
+            Actions.Home({data:this.state.nombre});
           }
           else {
             Alert.alert('Correo o contraseña incorrectos');
@@ -73,7 +85,7 @@ import { Actions } from "react-native-router-flux";
 
             <View style={{marginTop: 40, backgroundColor: '#FFC336', width: 250, borderRadius: 20}}>
               <Button
-                onPress={this.login.bind(this)}//this._onPressButton}
+                onPress={this.login.bind(this)}
                 title="Iniciar sesión"
                 color='white'
               />

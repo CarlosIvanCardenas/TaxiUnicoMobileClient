@@ -2,31 +2,35 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TextInput, Button, Alert, TouchableOpacity, ScrollView} from 'react-native';
 import { Actions } from "react-native-router-flux";
 
-  class Registrarse extends Component{
+  class postviaje extends Component{
     constructor(props) {
         super(props);
         this.state = { 
-        nombre: '',
-        apellidos:'',
-        direccion:'',
-        correo: '',
-        telefono:'',
-        contraseña: '',
-        valcontraseña:''};
+        origen: '',
+        destino:'',,
+        horaSolicitud: '',
+        clienteId:this.props.text,
+        numeroPasajeros:'',
+        formaPago:'Tarjeta',
+        estatus:'pendiente'
+        };
     }
 
     async signup() {
       var data = {
-        'correo': this.state.correo,
-        'contraseña': this.state.contraseña,
-        'primerNombre': this.state.nombre,
-        'apellidos': this.state.apellidos,
-        'telefono': this.state.telefono,
-        'direccion': this.state.direccion,
-        'estatus': "Activo"
+        'origen': this.state.origen,
+        'destino': this.state.destino,
+        'kilometros': this.state.kilometros,
+        'horaSolicitud': this.state.horaSolicitud,
+        'horaPartida': this.state.horaPartida,
+        'horaLlegada': this.state.horaLlegada,
+        'clienteId': this.state.clienteId,
+        'numeroPasajeros': this.state.numeroPasajeros,
+        'formaPago': this.state.formaPago,
+        'estatus': this.state.estatus
     }
 
-      if(this.state.correo == ''||this.state.contraseña ==''||this.state.nombre==''||this.state.apellidos==''||this.state.telefono==''||this.state.direccion==''){
+      /*if(this.state.correo == ''||this.state.contraseña ==''||this.state.nombre==''||this.state.apellidos==''||this.state.telefono==''||this.state.direccion==''){
         Alert.alert('Hace falta llenar algunos campos');
         return;
       }
@@ -34,10 +38,10 @@ import { Actions } from "react-native-router-flux";
       if(this.state.contraseña != this.state.valcontraseña){
         Alert.alert('Tu contraseña no coincide');
         return;
-      }
+      }*/
       
       try {
-        let response = await fetch('http://206.189.164.14:80/api/clientes', {
+        let response = await fetch('http://206.189.164.14:80/api/viajes', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -56,8 +60,6 @@ import { Actions } from "react-native-router-flux";
         Alert.alert('Error');
         console.error(error);
       }
-      //getPost()
-      //console.log()
     }
 
     render(){
@@ -77,76 +79,66 @@ import { Actions } from "react-native-router-flux";
 
           <View style={{backgroundColor: 'white', flex: 4, alignItems: 'center'}}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flexGrow: 1}}>
-              <Text style={styles.campos}>Nombre</Text>
+              <Text style={styles.campos}>Origen</Text>
               <TextInput
                 style={styles.llenar}
-                placeholder="Ingresa tu nombre"
+                placeholder="Ingresa tu origen"
                 placeholderTextColor='#53B4FF'
                 autoCapitalize='words'
-                onChangeText={(nombre) => this.setState({nombre})}
-                value={this.state.nombre}
+                onChangeText={(origen) => this.setState({origen})}
+                value={this.state.origen}
               />
 
-              <Text style={styles.campos}>Apellidos</Text>
+              <Text style={styles.campos}>Destino</Text>
               <TextInput
                 style={styles.llenar}
-                placeholder="Ingresa tus apellidos"
+                placeholder="Ingresa tu destino"
                 placeholderTextColor='#53B4FF'
                 autoCapitalize='words'
-                onChangeText={(apellidos) => this.setState({apellidos})}
-                value={this.state.apellidos}
+                onChangeText={(destino) => this.setState({destino})}
+                value={this.state.destino}
               />
 
-              <Text style={styles.campos}>Correo electrónico</Text>
+              <Text style={styles.campos}>horaSolicitud</Text>
               <TextInput
                 style={styles.llenar}
-                placeholder="Ingresa tu correo electrónico"
+                placeholder="Ingresa tu hora de solicitud"
                 placeholderTextColor='#53B4FF'
-                autoCapitalize='none'
-                onChangeText={(correo) => this.setState({correo})}
-                value={this.state.correo}
+                onChangeText={(horaSolicitud) => this.setState({horaSolicitud})}
+                value={this.state.horaSolicitud}
               />
 
-              <Text style={styles.campos}>Teléfono</Text>
+              <Text style={styles.campos}>horaPartida</Text>
               <TextInput
                 style={styles.llenar}
-                placeholder="Ingresa tu número de teléfono"
-                placeholderTextColor='#53B4FF'
-                keyboardType='numeric'
-                onChangeText={(telefono) => this.setState({telefono})}
-                value={this.state.telefono}
-              />
-
-              <Text style={styles.campos}>Dirección</Text>
-              <TextInput
-                style={styles.llenar}
-                placeholder="Ingresa tu dirección"
+                placeholder="Ingresa tu hora partida"
                 placeholderTextColor='#53B4FF'
                 autoCapitalize='sentences'
-                onChangeText={(direccion) => this.setState({direccion})}
-                value={this.state.direccion}
+                onChangeText={(horaPartida) => this.setState({horaPartida})}
+                value={this.state.horaPartida}
               />
 
-              <Text style={styles.campos}>Contraseña</Text>
+
+              <Text style={styles.campos}>numeroPasajeros</Text>
               <TextInput
                 style={styles.llenar}
-                placeholder="Ingresa tu contraseña"
+                placeholder="Ingresa otra vez tu"
                 placeholderTextColor='#53B4FF'
                 autoCapitalize='none'
                 secureTextEntry={true}
-                onChangeText={(contraseña) => this.setState({contraseña})}
-                value={this.state.contraseña}
+                onChangeText={(numeroPasajeros) => this.setState({numeroPasajeros})}
+                value={this.state.numeroPasajeros}
               />
 
-              <Text style={styles.campos}>Valida tu contraseña</Text>
+              <Text style={styles.campos}>formaPago</Text>
               <TextInput
                 style={styles.llenar}
-                placeholder="Ingresa otra vez tu contraseña"
+                placeholder="Ingresa otra vez tu"
                 placeholderTextColor='#53B4FF'
                 autoCapitalize='none'
                 secureTextEntry={true}
-                onChangeText={(valcontraseña) => this.setState({valcontraseña})}
-                value={this.state.valcontraseña}
+                onChangeText={(formaPago) => this.setState({formaPago})}
+                value={this.state.formaPago}
               />
             </ScrollView>
           </View>
@@ -206,4 +198,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Registrarse;
+module.exports = postviaje;
