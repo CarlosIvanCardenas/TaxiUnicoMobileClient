@@ -7,7 +7,7 @@ import { Actions } from "react-native-router-flux";
         super(props);
         this.state = { 
         origen: '',
-        destino:'',,
+        destino:'',
         horaSolicitud: '',
         clienteId:this.props.text,
         numeroPasajeros:'',

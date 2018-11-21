@@ -10,12 +10,17 @@ export default class Home extends Component{
         codigo: '',
         origen: '',
         destino:'',
-        horaSolicitud: '',
-        clienteId:this.props.text,
+        //horaSolicitud: '',
+        clienteId: this.props.userID,
         numeroPasajeros:'',
         formaPago:'Tarjeta',
         estatus:'pendiente'
       };
+    }
+
+    componentDidMount(){
+      //console.log(Actions.currentScene)
+      //console.log(this.state.clienteId)
     }
 
     async solicitar() {
@@ -23,12 +28,11 @@ export default class Home extends Component{
         var moment = require('moment');
         
 
-        this.setState({horaSolicitud: moment().format()})
         var data = {
-          //'codigo': this.state.codigo,
+          'codigo': this.state.codigo,
           'origen': this.state.origen,
           'destino': this.state.destino,
-          'horaSolicitud': this.state.horaSolicitud,
+          'horaSolicitud': moment().format(),
           'clienteId': this.state.clienteId,
           'numeroPasajeros': this.state.numeroPasajeros,
           'formaPago': this.state.formaPago,
@@ -37,7 +41,7 @@ export default class Home extends Component{
       
       
        
-      console.log(this.state.horaSolicitud)
+      console.log(data)
       return
   
         /*if(this.state.correo == ''||this.state.contraseña ==''||this.state.nombre==''||this.state.apellidos==''||this.state.telefono==''||this.state.direccion==''){
@@ -74,7 +78,7 @@ export default class Home extends Component{
 
     _onpress(){
         //Alert.alert('You tapped the button!')
-        console.log(this.props.data)
+        console.log(this.props)
     }
 
     render(){
@@ -119,8 +123,8 @@ export default class Home extends Component{
                     placeholder="Pasajeros"
                     placeholderTextColor='#7A7A7A'
                     keyboardType='numeric'
-                    onChangeText={(pasajeros) => this.setState({pasajeros})}
-                    value={this.state.pasajeros}
+                    onChangeText={(numeroPasajeros) => this.setState({numeroPasajeros})}
+                    value={this.state.numeroPasajeros}
                     />
                  </View>
 

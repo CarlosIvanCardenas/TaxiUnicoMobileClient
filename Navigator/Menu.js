@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {Content, List, ListItem, Thumbnail } from 'native-base';
 
 export default class Menu extends Component{
+
+    componentDidMount(){
+        
+    }
 
     render(){
         return(
@@ -13,25 +17,26 @@ export default class Menu extends Component{
                         source={{uri:'https://www.morpht.com/sites/morpht/files/styles/landscape_medium/public/dalibor-matura_1.jpg?itok=Wskh0jNP'}}
                         large
                     />
-                    <Text>Hola</Text>
+                    <Text style={{fontWeight:'bold',color:'white', fontSize:15,marginTop:10}}>Bienvenido:</Text>
+                    <Text style={{fontWeight:'bold',color:'white', fontSize:30, marginTop:10}}>{this.props.items[0].params.nombre}</Text>
                 </View>
-                <View style={{flex:2}}>
+                <View style={{flex:2,}}>
                     <Content>
                         <List>
-                        <ListItem onPress={() => Actions.Home()}>
-                                <Text>Home</Text>
+                        <ListItem style={{borderRightColor:'green',borderRightWidth:10}} onPress={() => Actions.Home()}>
+                                <Text style={styles.texto}>Home</Text>
                             </ListItem>
-                            <ListItem >
-                                <Text>Historial</Text>
+                            <ListItem style={{borderRightColor:'blueviolet',borderRightWidth:10}}>
+                                <Text style={styles.texto}>Historial</Text>
                             </ListItem>
-                            <ListItem>
-                                <Text>Formas de pago</Text>
+                            <ListItem style={{borderRightColor:'gray',borderRightWidth:10}}>
+                                <Text style={styles.texto}>Formas de pago</Text>
                             </ListItem>
-                            <ListItem>
-                                <Text>Configuración</Text>
+                            <ListItem style={{borderRightColor:'orange',borderRightWidth:10}}>
+                                <Text style={styles.texto}>Configuración</Text>
                             </ListItem>
-                            <ListItem onPress={() => Actions.Iniciar_sesion()}>
-                                <Text>Cerrar sesión</Text>
+                            <ListItem style={{borderRightColor:'red',borderRightWidth:10}} onPress={() => Actions.Iniciar_sesion()}>
+                                <Text style={styles.texto}>Cerrar sesión</Text>
                             </ListItem>
                         </List>
                     </Content>
@@ -40,5 +45,15 @@ export default class Menu extends Component{
         )
     }
 }
+
+const styles = StyleSheet.create({
+    texto: {
+      fontWeight: 'bold',
+      color: 'black',
+      fontSize: 20,
+    
+      lineHeight: 50,
+    }
+  });
 
 module.exports = Menu;

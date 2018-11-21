@@ -47,7 +47,7 @@ import { Actions } from "react-native-router-flux";
         })
         if (response.ok) {
           Alert.alert('¡Bienvenido!');
-          Actions.Home()
+          Actions.Iniciar_sesion()
         }
         else{
           Alert.alert('Error inesperado, intenta de nuevo');

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Alert} from 'react-native';
 import Iniciar_sesion from "./Navigator/Iniciar_sesion"
 import Registrarse from './Navigator/Registrarse';
 import postviaje from './Navigator/postviaje';
@@ -7,6 +7,7 @@ import Home from './Navigator/Home';
 import Menu from './Navigator/Menu';
 import {Scene, Router, Actions, Drawer} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {login} from './Navigator/Api';
 //import Icon from 'react-native-vector-icons/MaterialIcons';
 
 /**
@@ -25,28 +26,23 @@ const MenuIcon = () => {
 
 export default class App extends Component{
   state = {
-    currentUser: {
-      nombre: '',
-      apellido: '' // Aqui es como sea que venga el api, ahi me lo invente
-    }
+    nombrecompleto:'',
+    identificacion:''
   }
 
   /**
    * Luego, aqui yo defino mis llamadas al api (en teoria saca todo a otro archivo pero se ve algo asi)
    */
-
-   // supongamos ue esta es la que trae el nombre del usuario
-  getUser = () => {
-    // luego aqui ya haces todo lo del api
-
-    const response = fetch( ... .. .. .bla lba)
-
-    // luego aqui esta lo importante, haces:
-
-    this.setState({ currentUser: response.user })
-    // al hacer eso, se van a guardar en el estado del componente y se van a poder
-    // pasar hacia abajo de los hijos asi
-
+  getUser = async (correo,contraseña) => {
+    let { error, nombre, id } = await login(correo,contraseña)
+    this.setState({nombrecompleto: nombre})
+    this.setState({identificacion: id})
+    if(error){
+      Alert.alert(error)
+    }else{
+      //console.log(this.state.nombrecompleto)
+      Actions.Home({nombre:this.state.nombrecompleto})
+    }
 
   }
 
@@ -58,13 +54,14 @@ export default class App extends Component{
             key="Iniciar_sesion" 
             component={Iniciar_sesion} 
             title="Login"
+            login={this.getUser}
             initial={true}
             hideNavBar={true} 
             /**Lo mas importante, va a ser que aqui en vez de que el componente internamente haga login, se lo vas  apasar como prop. Al hacer esto, cuando ser corra esa funcion y llame
              * al api, te aseguras que le va a psara los datos a los hijos  y todos van a estar sin-
              * cronizados con la misma informacion
             */
-            onLoginButtonClicked={() => this.getUser()}
+            //onLoginButtonClicked={() => this.getUser()}
             />
           <Scene key="Registrarse" component={Registrarse} title="Sign Up" hideNavBar={true} />
           
@@ -77,9 +74,17 @@ export default class App extends Component{
             drawerWidth={300} 
             hideNavBar={true}
             /** Luego aqui se pasan a este comonente asi */
-            userName={this.state.currentUser.nombre}
+            //userName={this.state.nombrecompleto}
             >
-            <Scene key="Home" component={Home} title="Nuevo viaje" hideNavBar={false} initial={false}/>
+            <Scene 
+            key="Home" 
+            component={Home} 
+            title="Nuevo viaje" 
+            hideNavBar={false} 
+            initial={false}
+            userID={this.state.identificacion}
+            />
+            
             
           </Drawer>
         </Scene>

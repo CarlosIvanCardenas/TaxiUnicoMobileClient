@@ -17,33 +17,11 @@ import { Actions } from "react-native-router-flux";
       Alert.alert('Te hemos enviado tu contraseña a tu correo');
     };
 
-    async login(){
-      try {
-        let response = await fetch('http://206.189.164.14/api/clientes/login/'+this.state.correo+'/'+this.state.contraseña);
-        if(response.ok){
-          let responseJson = await response.json();
-          if (responseJson != null) {
-
-            //Actions.postviaje({text: responseJson.id});
-            //console.log(responseJson.primerNombre + " " + responseJson.apellidos)
-
-            this.setState({nombre: responseJson.primerNombre + " " + responseJson.apellidos}) 
-            console.log(this.state.nombre)
-            //Actions.Menu({data:this.state.nombre})
-            Actions.Home({data:this.state.nombre});
-          }
-          else {
-            Alert.alert('Correo o contraseña incorrectos');
-          }
-        }
-        else {
-          Alert.alert('Correo o contraseña incorrectos');
-        }
-      } 
-      catch (error) {
-        alert(error);
-      }
+    login(){
+      this.props.login(this.state.correo,this.state.contraseña)
     }
+
+   
   
     render(){
       return(
