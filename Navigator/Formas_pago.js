@@ -38,14 +38,14 @@ import { Actions } from "react-native-router-flux";
     }
 
     _onthis(){
-      console.log(this.state.items[0])
+      Actions.Agregar_forma_pago()
     }
    
   
     render(){
       return(
 
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor:'white'}}>
           <View style={{backgroundColor: 'white', flex: 4,}}> //alignItems: 'center'}}>
             
               <FlatList 
@@ -80,8 +80,8 @@ import { Actions } from "react-native-router-flux";
             
           </View>
 
-          <View style={{flex:1.6, backgroundColor:'black', alignItems: 'center'}}>
-            <View style={{marginTop: 20, backgroundColor: '#FFC336', width: 250, borderRadius: 20, alignItems: 'center'}}>
+          <View style={{flex:1, backgroundColor:'white', alignItems: 'center', justifyContent:'center',borderTopColor:'black', borderTopWidth:5,borderTopStartRadius:40,borderTopEndRadius:40}}>
+            <View style={{backgroundColor: '#FFC336', width: 250, borderRadius: 20, alignItems: 'center'}}>
               <Button
                 onPress={this._onthis.bind(this)}
                 title="Agregar nueva forma de Pago"

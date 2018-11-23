@@ -11,6 +11,7 @@ import {login} from './Navigator/Api';
 import Historial from './Navigator/Historial';
 import Formas_pago from './Navigator/Formas_pago';
 import Configuracion from './Navigator/Configuracion';
+import Agregar_forma_pago from './Navigator/Agregar_forma_pago';
 //import Icon from 'react-native-vector-icons/MaterialIcons';
 
 /**
@@ -25,6 +26,8 @@ const MenuIcon = () => {
     <Icon name={'bars'} size={30} color='white'/>
   )
 }
+
+const myIcon = (<Icon name="arrow-left" size={30} color="white" onPress={() => Actions.Formas_pago()} />)
 
 
 export default class App extends Component{
@@ -69,9 +72,20 @@ export default class App extends Component{
             //onLoginButtonClicked={() => this.getUser()}
             />
             
-          <Scene key="Registrarse" component={Registrarse} title="Sign Up" hideNavBar={true} />
+          <Scene key="Registrarse" component={Registrarse} title="Sign Up" hideNavBar={true} gesturesEnabled={false} />
           
           <Scene key="postviaje" component={postviaje} title="postviaje" hideNavBar={true} initial={false}  />
+
+          <Scene 
+            key="Agregar_forma_pago" 
+            component={Agregar_forma_pago} 
+            title="Detalles de la tarjeta"
+            userID={this.state.identificacion}
+            renderLeftButton={myIcon}
+            gesturesEnabled={false}
+            initial={false}
+            hideNavBar={false} 
+            />          
           <Drawer 
             key="drawer" 
             drawer={true} 
@@ -79,6 +93,7 @@ export default class App extends Component{
             drawerIcon={MenuIcon} 
             drawerWidth={300} 
             hideNavBar={true}
+            gesturesEnabled={false}
             /** Luego aqui se pasan a este comonente asi */
             //userName={this.state.nombrecompleto}
             >
@@ -108,6 +123,7 @@ export default class App extends Component{
             initial={false}
             hideNavBar={false} 
             />
+            
             <Scene 
             key="Configuracion" 
             component={Configuracion} 
