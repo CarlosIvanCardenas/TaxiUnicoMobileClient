@@ -80,7 +80,6 @@ export default class App extends Component{
             key="Agregar_forma_pago" 
             component={Agregar_forma_pago} 
             title="Detalles de la tarjeta"
-            userID={this.state.identificacion}
             renderLeftButton={myIcon}
             gesturesEnabled={false}
             initial={false}

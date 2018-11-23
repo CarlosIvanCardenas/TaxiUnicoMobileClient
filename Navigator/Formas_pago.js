@@ -6,7 +6,7 @@ import { Actions } from "react-native-router-flux";
     constructor(props) {
       super(props);
       this.state = { 
-        ID: this.props.userID,
+        ID: this.props.user,
         items: []
       };
     }
@@ -38,7 +38,7 @@ import { Actions } from "react-native-router-flux";
     }
 
     _onthis(){
-      Actions.Agregar_forma_pago()
+      Actions.Agregar_forma_pago({user:this.props.userID})
     }
    
   
