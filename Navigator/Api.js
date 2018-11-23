@@ -5,11 +5,13 @@
       let error
       let nombre
       let id
+      let calificacion
       if(response.ok) {
         let responseJson = await response.json();
         if (responseJson != null) {
           nombre = responseJson.primerNombre + " " + responseJson.apellidos
           id = responseJson.id 
+          calificacion = responseJson.puntuacion
           error = null
         }
         else {
@@ -20,8 +22,8 @@
       else {
           error = 'Correo o contraseña incorrectos'
       }
-
-      return {error,nombre,id}
+      
+      return {error,nombre,id,calificacion}
     } 
     catch (error) {
       alert(error);

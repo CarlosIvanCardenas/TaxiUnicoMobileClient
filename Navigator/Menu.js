@@ -6,7 +6,7 @@ import {Content, List, ListItem, Thumbnail } from 'native-base';
 export default class Menu extends Component{
 
     componentDidMount(){
-        
+        //sconsole.log(this.props)
     }
 
     render(){
@@ -19,20 +19,21 @@ export default class Menu extends Component{
                     />
                     <Text style={{fontWeight:'bold',color:'white', fontSize:15,marginTop:10}}>Bienvenido:</Text>
                     <Text style={{fontWeight:'bold',color:'white', fontSize:30, marginTop:10}}>{this.props.items[0].params.nombre}</Text>
+                    <Text style={{fontWeight:'bold',color:'white', fontSize:25, marginTop:10}}>Calificación:    {this.props.items[0].params.calificacion}</Text>
                 </View>
-                <View style={{flex:2,}}>
+                <View style={{flex:2}}>
                     <Content>
                         <List>
                         <ListItem style={{borderRightColor:'green',borderRightWidth:10}} onPress={() => Actions.Home()}>
                                 <Text style={styles.texto}>Home</Text>
                             </ListItem>
-                            <ListItem style={{borderRightColor:'blueviolet',borderRightWidth:10}}>
+                            <ListItem style={{borderRightColor:'blueviolet',borderRightWidth:10}} onPress={() => Actions.Historial()}>
                                 <Text style={styles.texto}>Historial</Text>
                             </ListItem>
-                            <ListItem style={{borderRightColor:'gray',borderRightWidth:10}}>
+                            <ListItem style={{borderRightColor:'gray',borderRightWidth:10}} onPress={() => Actions.Formas_pago()}>
                                 <Text style={styles.texto}>Formas de pago</Text>
                             </ListItem>
-                            <ListItem style={{borderRightColor:'orange',borderRightWidth:10}}>
+                            <ListItem style={{borderRightColor:'orange',borderRightWidth:10}} onPress={() => Actions.Configuracion()}>
                                 <Text style={styles.texto}>Configuración</Text>
                             </ListItem>
                             <ListItem style={{borderRightColor:'red',borderRightWidth:10}} onPress={() => Actions.Iniciar_sesion()}>

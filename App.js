@@ -8,6 +8,9 @@ import Menu from './Navigator/Menu';
 import {Scene, Router, Actions, Drawer} from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {login} from './Navigator/Api';
+import Historial from './Navigator/Historial';
+import Formas_pago from './Navigator/Formas_pago';
+import Configuracion from './Navigator/Configuracion';
 //import Icon from 'react-native-vector-icons/MaterialIcons';
 
 /**
@@ -27,21 +30,23 @@ const MenuIcon = () => {
 export default class App extends Component{
   state = {
     nombrecompleto:'',
-    identificacion:''
+    identificacion:'',
+    puntuacion: 0
   }
 
   /**
    * Luego, aqui yo defino mis llamadas al api (en teoria saca todo a otro archivo pero se ve algo asi)
    */
   getUser = async (correo,contraseña) => {
-    let { error, nombre, id } = await login(correo,contraseña)
+    let { error, nombre, id, calificacion } = await login(correo,contraseña)
     this.setState({nombrecompleto: nombre})
     this.setState({identificacion: id})
+    this.setState({puntuacion: calificacion})
     if(error){
       Alert.alert(error)
     }else{
       //console.log(this.state.nombrecompleto)
-      Actions.Home({nombre:this.state.nombrecompleto})
+      Actions.Home({nombre:this.state.nombrecompleto,calificacion:this.state.puntuacion})
     }
 
   }
@@ -63,6 +68,7 @@ export default class App extends Component{
             */
             //onLoginButtonClicked={() => this.getUser()}
             />
+            
           <Scene key="Registrarse" component={Registrarse} title="Sign Up" hideNavBar={true} />
           
           <Scene key="postviaje" component={postviaje} title="postviaje" hideNavBar={true} initial={false}  />
@@ -83,9 +89,33 @@ export default class App extends Component{
             hideNavBar={false} 
             initial={false}
             userID={this.state.identificacion}
+            nombrecompleto = {this.state.nombrecompleto}
             />
+            <Scene 
+            key="Historial" 
+            component={Historial} 
+            title="Historial"
             
+            initial={false}
+            hideNavBar={false} 
+            />
+            <Scene 
+            key="Formas_pago" 
+            component={Formas_pago} 
+            title="Formas de pago"
+            userID={this.state.identificacion}
             
+            initial={false}
+            hideNavBar={false} 
+            />
+            <Scene 
+            key="Configuracion" 
+            component={Configuracion} 
+            title="Configuración"
+            
+            initial={false}
+            hideNavBar={false} 
+            />
           </Drawer>
         </Scene>
       </Router>

@@ -10,8 +10,9 @@ export default class Home extends Component{
         codigo: '',
         origen: '',
         destino:'',
-        //horaSolicitud: '',
+        horaSolicitud: '',
         clienteId: this.props.userID,
+        cliente:this.props.nombrecompleto,
         numeroPasajeros:'',
         formaPago:'Tarjeta',
         estatus:'pendiente'
@@ -20,39 +21,54 @@ export default class Home extends Component{
 
     componentDidMount(){
       //console.log(Actions.currentScene)
-      //console.log(this.state.clienteId)
+      //console.log(this.state.cliente)
     }
 
     async solicitar() {
 
         var moment = require('moment');
+
+        //var startdate = moment();
+        //startdate = startdate.subtract(6, "hours");
+        //startdate = startdate.format("DD-MM-YYYY");
+        //console.log(startdate)
         
 
         var data = {
-          'codigo': this.state.codigo,
+          //'codigo': this.state.codigo,
           'origen': this.state.origen,
           'destino': this.state.destino,
-          'horaSolicitud': moment().format(),
+          'horaSolicitud': moment().format('YYYY-MM-DDTHH:mm:ss'),
+          'vehiculoId': "00000000-0000-0000-0000-000000000000",
           'clienteId': this.state.clienteId,
           'numeroPasajeros': this.state.numeroPasajeros,
           'formaPago': this.state.formaPago,
           'estatus': this.state.estatus
       }
-      
-      
-       
-      console.log(data)
-      return
+      console.log(moment().format('YYYY-MM-DDTHH:mm:ss'))
+      //console.log(moment().format(YYYY-MM-DD HH:mm:ss))
+      //console.log(data)
+      //return 
   
-        /*if(this.state.correo == ''||this.state.contraseña ==''||this.state.nombre==''||this.state.apellidos==''||this.state.telefono==''||this.state.direccion==''){
-          Alert.alert('Hace falta llenar algunos campos');
+        if(this.state.codigo == ''){
+          Alert.alert('Hace que ingreses tu código de viaje');
           return;
         }
-  
-        if(this.state.contraseña != this.state.valcontraseña){
-          Alert.alert('Tu contraseña no coincide');
+
+        if(this.state.origen == ''){
+          Alert.alert('Hace falta que ingreses el origen del viaje');
           return;
-        }*/
+        }
+
+        if(this.state.destino == ''){
+          Alert.alert('Hace falta que ingreses el destino del viaje');
+          return;
+        }
+
+        if(this.state.numeroPasajeros == ''){
+          Alert.alert('Hace falta que indiques cuantos lugares necesitas');
+          return;
+        }
         
         try {
           let response = await fetch('http://206.189.164.14:80/api/viajes', {
@@ -64,8 +80,8 @@ export default class Home extends Component{
             body: JSON.stringify(data),
           })
           if (response.ok) {
-            Alert.alert('¡Bienvenido!');
-            Actions.Home()
+            Alert.alert('¡Viaje registrado!');
+            
           }
           else{
             Alert.alert('Error inesperado, intenta de nuevo');
