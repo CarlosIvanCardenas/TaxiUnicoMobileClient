@@ -109,7 +109,7 @@ export default class App extends Component{
             key="Historial" 
             component={Historial} 
             title="Historial"
-            
+            userID={this.state.identificacion}
             initial={false}
             hideNavBar={false} 
             />

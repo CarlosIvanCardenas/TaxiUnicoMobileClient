@@ -39,7 +39,7 @@ export default class Home extends Component{
           'origen': this.state.origen,
           'destino': this.state.destino,
           'horaSolicitud': moment().format('YYYY-MM-DDTHH:mm:ss'),
-          'vehiculoId': "00000000-0000-0000-0000-000000000000",
+          'vehiculoId': "08d653cc-96c7-4959-88e1-3482ad13a524",
           'clienteId': this.state.clienteId,
           'numeroPasajeros': this.state.numeroPasajeros,
           'formaPago': this.state.formaPago,
