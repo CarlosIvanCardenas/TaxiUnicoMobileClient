@@ -3,7 +3,7 @@ import { Platform, StatusBar, StyleSheet, View, Text, AppRegistry, Image, TextIn
 import { Actions } from 'react-native-router-flux';
 import Iniciar_sesion from "./Iniciar_sesion"
 
-export default class Home extends Component{
+export default class miviaje extends Component{
     constructor(props) {
       super(props);
       this.state = { 
@@ -80,7 +80,6 @@ export default class Home extends Component{
             body: JSON.stringify(data),
           })
           if (response.ok) {
-            Actions.miviaje()
             Alert.alert('¡Viaje registrado!');
             
           }
@@ -173,7 +172,7 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Home;
+module.exports = miviaje;
 
 /*<View style={{backgroundColor: 'orange', flex: 1}}>
                     <Text style={{color:'red'}}>prueba</Text>

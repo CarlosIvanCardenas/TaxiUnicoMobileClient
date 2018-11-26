@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Alert} from 'react-native';
 import Iniciar_sesion from "./Navigator/Iniciar_sesion"
 import Registrarse from './Navigator/Registrarse';
-import postviaje from './Navigator/postviaje';
 import Home from './Navigator/Home';
 import Menu from './Navigator/Menu';
 import {Scene, Router, Actions, Drawer} from 'react-native-router-flux';
@@ -12,6 +11,7 @@ import Historial from './Navigator/Historial';
 import Formas_pago from './Navigator/Formas_pago';
 import Configuracion from './Navigator/Configuracion';
 import Agregar_forma_pago from './Navigator/Agregar_forma_pago';
+import miviaje from './Navigator/miviaje';
 //import Icon from 'react-native-vector-icons/MaterialIcons';
 
 /**
@@ -73,8 +73,6 @@ export default class App extends Component{
             />
             
           <Scene key="Registrarse" component={Registrarse} title="Sign Up" hideNavBar={true} gesturesEnabled={false} />
-          
-          <Scene key="postviaje" component={postviaje} title="postviaje" hideNavBar={true} initial={false}  />
 
           <Scene 
             key="Agregar_forma_pago" 
@@ -100,6 +98,15 @@ export default class App extends Component{
             key="Home" 
             component={Home} 
             title="Nuevo viaje" 
+            hideNavBar={false} 
+            initial={false}
+            userID={this.state.identificacion}
+            nombrecompleto = {this.state.nombrecompleto}
+            />
+            <Scene 
+            key="miviaje" 
+            component={miviaje} 
+            title="Mi viaje" 
             hideNavBar={false} 
             initial={false}
             userID={this.state.identificacion}
