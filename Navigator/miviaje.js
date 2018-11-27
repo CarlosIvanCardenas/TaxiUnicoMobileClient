@@ -41,8 +41,13 @@ export default class miviaje extends Component{
               let responseJson = await response.json();
               this.setState({viaje:responseJson})
               let estado = responseJson.estatus
-              
-              if(estado == "Pendiente"){
+              if(estado == "Cancelado"){
+                let nombre = responseJson.vehiculo.taxista.primerNombre
+                let apellido = responseJson.vehiculo.taxista.apellidos
+                Actions.reset('Home',{userID: this.state.viaje.clienteId});
+                Alert.alert(nombre+' '+apellido+' ha cancelado tu viaje');
+              }
+              else if(estado == "Pendiente"){
                 this.setState({texto:"Buscando un conductor"})
               }
               else if(estado == "Esperando taxista"){

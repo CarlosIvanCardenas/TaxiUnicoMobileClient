@@ -16,13 +16,13 @@ import { Actions } from "react-native-router-flux";
         let response = await fetch('http://206.189.164.14:80/api/viajes/cliente/'+this.state.ID);
         if(response.ok) {
           let responseJson = await response.json();
+          let array = [];
           for (let index =0;index < responseJson.length;index++){
             let obj = responseJson[index];
-            let array = [];
             array.push(obj);
-            this.setState({items: array})
           }
-          this.forceUpdate();
+          this.setState({items: array})
+          //this.forceUpdate();
         }
         else {
             error = 'Error'
@@ -67,7 +67,7 @@ import { Actions } from "react-native-router-flux";
                     <View style={{flex:1,flexDirection:'row',justifyContent:'space-around'}}>
 
                       <View style={{alignItems:'flex-start'}}>
-                        <Text style={styles.texto}> {this.formatohora(item.horaPartida)}</Text>
+                        <Text style={styles.texto}> {this.formatohora(item.horaSolicitud)}</Text>
                       </View>
 
                       <View style={{alignItems:'flex-end'}}>
@@ -84,7 +84,7 @@ import { Actions } from "react-native-router-flux";
                       </View>
 
                       <View style={{alignItems:'flex-end'}}>
-                        <Text style={styles.texto}>{item.formaPago}</Text>
+                        <Text style={styles.texto}>{item.estatus}</Text>
                       </View>
                     </View>  
                   </View>      

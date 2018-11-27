@@ -16,11 +16,13 @@ import { Actions } from "react-native-router-flux";
         let response = await fetch('http://206.189.164.14:80/api/cards/cliente/'+this.props.UserID);
         if(response.ok) {
           let responseJson = await response.json();
+          let array = [];
           for (let index =0;index < responseJson.length;index++){
             let obj = responseJson[index];
-            this.state.items.push(obj);
+            array.push(obj);
           }
-          this.forceUpdate();
+          this.setState({items: array})
+          //this.forceUpdate();
         }
         else {
             error = 'Correo o contraseña incorrectos2'

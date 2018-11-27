@@ -41,7 +41,7 @@ import { Actions } from "react-native-router-flux";
         })
         if (response.ok) {
           Alert.alert('¡Tarjeta registrada!');
-          Actions.Formas_pago()
+          Actions.Formas_pago({UserID:this.state.ID})
         }
         else{
           Alert.alert('Error inesperado, intenta de nuevo');
