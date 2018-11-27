@@ -9,8 +9,29 @@ export default class miviaje extends Component{
       this.state = { 
           Estatus_viaje: '',
           texto:'',
-          interval:''
+          interval:'',
+          viaje: null,
       };
+    }
+
+    cancelarViaje(){
+        let item = this.state.viaje;
+        item.estatus = "Cancelado";
+        try {
+            fetch('http://206.189.164.14/api/viajes/' + item.id, {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(item),
+            });
+            Actions.reset('Home',{userID: item.clienteId});
+            Alert.alert('Viaje cancelado');
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 
     async buscar(){
@@ -18,7 +39,7 @@ export default class miviaje extends Component{
             let response = await fetch('http://206.189.164.14:80/api/viajes/'+this.props.viaje_id);
             if(response.ok) {
               let responseJson = await response.json();
-
+              this.setState({viaje:responseJson})
               let estado = responseJson.estatus
               
               if(estado == "Pendiente"){
@@ -62,13 +83,9 @@ export default class miviaje extends Component{
         clearInterval(this.inter)
     }
 
-    
-
- 
-
     _onpress(){
         //Alert.alert('You tapped the button!')
-        console.log(this.props)
+        //console.log(this.props)
     }
 
     render(){
@@ -77,7 +94,15 @@ export default class miviaje extends Component{
 
                 <View style={styles.input}>
                     <Text style={{fontSize:20,textAlign:'center'}}>{this.state.texto}</Text>
-                 </View>
+                </View>
+
+                <View style={{marginTop: 40, backgroundColor: 'red', width: 250, borderRadius: 20}}>
+                    <Button
+                        onPress={this.cancelarViaje.bind(this)}
+                        title="Cancelar"
+                        color='white'
+                    />
+                </View>
 
             </ImageBackground>
         )

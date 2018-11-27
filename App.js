@@ -12,6 +12,9 @@ import Formas_pago from './Navigator/Formas_pago';
 import Agregar_forma_pago from './Navigator/Agregar_forma_pago';
 import miviaje from './Navigator/miviaje';
 
+
+console.disableYellowBox = true;
+
 const MenuIcon = () => {
   return(
     <Icon name={'bars'} size={30} color='white'/>

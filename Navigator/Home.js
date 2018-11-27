@@ -31,6 +31,7 @@ export default class Home extends Component{
         var data = {
           'origen': this.state.origen,
           'destino': this.state.destino,
+          'kilometros': Math.random() * (10 - 2) + 2,
           'horaSolicitud': moment().format('YYYY-MM-DDTHH:mm:ss'),
           'vehiculoId': "08d653cc-96c7-4959-88e1-3482ad13a524",
           'clienteId': this.state.clienteId,

@@ -18,7 +18,9 @@ import { Actions } from "react-native-router-flux";
           let responseJson = await response.json();
           for (let index =0;index < responseJson.length;index++){
             let obj = responseJson[index];
-            this.state.items.push(obj);
+            let array = [];
+            array.push(obj);
+            this.setState({items: array})
           }
           this.forceUpdate();
         }
@@ -40,15 +42,13 @@ import { Actions } from "react-native-router-flux";
 
     componentDidMount(){
       this.getTrips();
-      //console.log(this.props)
-      console.log(this.props.UserID)
     }
   
     render(){
       return(
 
         <View style={{flex: 1, backgroundColor:'white'}}>
-          <View style={{backgroundColor: 'white', flex: 4,}}> //alignItems: 'center'}}>
+          <View style={{backgroundColor: 'white', flex: 4,}}>
             
             <FlatList 
               data ={this.state.items} 
@@ -71,7 +71,8 @@ import { Actions } from "react-native-router-flux";
                       </View>
 
                       <View style={{alignItems:'flex-end'}}>
-                        <Text style={styles.texto}>MX ${(Math.floor(Math.random() * 61)+20)}</Text>
+                        <Text style={styles.texto}>MX ${parseFloat(parseFloat(item.kilometros) * 15.0).toFixed(2)}</Text>
+                        
                       </View>
 
                     </View>

@@ -6,7 +6,7 @@ import {Content, List, ListItem, Thumbnail } from 'native-base';
 export default class Menu extends Component{
 
     componentDidMount(){
-        console.log(this.props.items[0].params.id)
+        //console.log(this.props.items[0].params.id)
     }
 
     render(){
@@ -24,7 +24,7 @@ export default class Menu extends Component{
                 <View style={{flex:2}}>
                     <Content>
                         <List>
-                        <ListItem style={{borderRightColor:'green',borderRightWidth:10}} onPress={() => Actions.Home({UserID:this.props.items[0].params.id})}>
+                        <ListItem style={{borderRightColor:'green',borderRightWidth:10}} onPress={() => Actions.Home({userID:this.props.items[0].params.id})}>
                                 <Text style={styles.texto}>Home</Text>
                             </ListItem>
                             <ListItem style={{borderRightColor:'blueviolet',borderRightWidth:10}} onPress={() => Actions.Historial({UserID:this.props.items[0].params.id})}>
