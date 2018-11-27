@@ -15,27 +15,20 @@ export default class Home extends Component{
         cliente:this.props.nombrecompleto,
         numeroPasajeros:'',
         formaPago:'Tarjeta',
-        estatus:'pendiente'
+        estatus:'Pendiente',
+        tripid:''
       };
     }
 
     componentDidMount(){
-      //console.log(Actions.currentScene)
-      //console.log(this.state.cliente)
+      //console.log(this.props.userID)
     }
 
     async solicitar() {
 
         var moment = require('moment');
-
-        //var startdate = moment();
-        //startdate = startdate.subtract(6, "hours");
-        //startdate = startdate.format("DD-MM-YYYY");
-        //console.log(startdate)
         
-
         var data = {
-          //'codigo': this.state.codigo,
           'origen': this.state.origen,
           'destino': this.state.destino,
           'horaSolicitud': moment().format('YYYY-MM-DDTHH:mm:ss'),
@@ -45,11 +38,7 @@ export default class Home extends Component{
           'formaPago': this.state.formaPago,
           'estatus': this.state.estatus
       }
-      console.log(moment().format('YYYY-MM-DDTHH:mm:ss'))
-      //console.log(moment().format(YYYY-MM-DD HH:mm:ss))
-      //console.log(data)
-      //return 
-  
+      
         if(this.state.codigo == ''){
           Alert.alert('Hace que ingreses tu código de viaje');
           return;
@@ -80,7 +69,8 @@ export default class Home extends Component{
             body: JSON.stringify(data),
           })
           if (response.ok) {
-            Actions.miviaje()
+            let responseJson = await response.json();
+            Actions.miviaje({viaje_id:responseJson.id})
             Alert.alert('¡Viaje registrado!');
             
           }
@@ -92,11 +82,6 @@ export default class Home extends Component{
           console.error(error);
         }
       }
-
-    _onpress(){
-        //Alert.alert('You tapped the button!')
-        console.log(this.props)
-    }
 
     render(){
         return(
@@ -153,8 +138,6 @@ export default class Home extends Component{
             </ImageBackground>
         )
     }
-      
-    
 }
   
 
@@ -174,31 +157,3 @@ const styles = StyleSheet.create({
 });
 
 module.exports = Home;
-
-/*<View style={{backgroundColor: 'orange', flex: 1}}>
-                    <Text style={{color:'red'}}>prueba</Text>
-                    <Text style={{color:'red'}}>{this.props.data}</Text>
-                        <View style={{marginTop: 40, backgroundColor: '#FFC336', width: 250, borderRadius: 20}}>
-                            <Button
-                                onPress={this._onpress()}
-                                title="Iniciar sesión"
-                                color='white'
-                            />
-                        </View>
-                </View> */
-
-
-
-/*
- <View style={{backgroundColor: 'white', flex: 1,alignItems: 'center'}}>
-                    <Text style={styles.campos}>Origen</Text>
-                    <TextInput
-                    style={{backgroundColor:'#FFC336',borderRadius: 20, fontSize:40}}
-                    placeholder="Ingresa tu origen"
-                    placeholderTextColor='#53B4FF'
-                    autoCapitalize='words'
-                    onChangeText={(origen) => this.setState({origen})}
-                    value={this.state.origen}
-                    />
-                </View>
- */

@@ -6,7 +6,7 @@ import {Content, List, ListItem, Thumbnail } from 'native-base';
 export default class Menu extends Component{
 
     componentDidMount(){
-        //sconsole.log(this.props)
+        console.log(this.props.items[0].params.id)
     }
 
     render(){
@@ -24,17 +24,14 @@ export default class Menu extends Component{
                 <View style={{flex:2}}>
                     <Content>
                         <List>
-                        <ListItem style={{borderRightColor:'green',borderRightWidth:10}} onPress={() => Actions.Home()}>
+                        <ListItem style={{borderRightColor:'green',borderRightWidth:10}} onPress={() => Actions.Home({UserID:this.props.items[0].params.id})}>
                                 <Text style={styles.texto}>Home</Text>
                             </ListItem>
-                            <ListItem style={{borderRightColor:'blueviolet',borderRightWidth:10}} onPress={() => Actions.Historial()}>
+                            <ListItem style={{borderRightColor:'blueviolet',borderRightWidth:10}} onPress={() => Actions.Historial({UserID:this.props.items[0].params.id})}>
                                 <Text style={styles.texto}>Historial</Text>
                             </ListItem>
-                            <ListItem style={{borderRightColor:'gray',borderRightWidth:10}} onPress={() => Actions.Formas_pago()}>
+                            <ListItem style={{borderRightColor:'gray',borderRightWidth:10}} onPress={() => Actions.Formas_pago({UserID:this.props.items[0].params.id})}>
                                 <Text style={styles.texto}>Formas de pago</Text>
-                            </ListItem>
-                            <ListItem style={{borderRightColor:'orange',borderRightWidth:10}} onPress={() => Actions.Configuracion()}>
-                                <Text style={styles.texto}>Configuración</Text>
                             </ListItem>
                             <ListItem style={{borderRightColor:'red',borderRightWidth:10}} onPress={() => Actions.Iniciar_sesion()}>
                                 <Text style={styles.texto}>Cerrar sesión</Text>

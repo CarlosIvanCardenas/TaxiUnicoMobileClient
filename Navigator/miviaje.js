@@ -7,90 +7,64 @@ export default class miviaje extends Component{
     constructor(props) {
       super(props);
       this.state = { 
-        codigo: '',
-        origen: '',
-        destino:'',
-        horaSolicitud: '',
-        clienteId: this.props.userID,
-        cliente:this.props.nombrecompleto,
-        numeroPasajeros:'',
-        formaPago:'Tarjeta',
-        estatus:'pendiente'
+          Estatus_viaje: '',
+          texto:'',
+          interval:''
       };
     }
 
-    componentDidMount(){
-      //console.log(Actions.currentScene)
-      //console.log(this.state.cliente)
+    async buscar(){
+        try {
+            let response = await fetch('http://206.189.164.14:80/api/viajes/'+this.props.viaje_id);
+            if(response.ok) {
+              let responseJson = await response.json();
+
+              let estado = responseJson.estatus
+              
+              if(estado == "Pendiente"){
+                this.setState({texto:"Buscando un conductor"})
+              }
+              else if(estado == "Esperando taxista"){
+                  let nombre = responseJson.vehiculo.taxista.primerNombre
+                  let apellido = responseJson.vehiculo.taxista.apellidos
+                  let carro = responseJson.vehiculo.modelo
+                  let color = responseJson.vehiculo.color
+                  let placas = responseJson.vehiculo.placa
+                this.setState({texto: nombre+" "+apellido+" esta en camino en un "+carro+" "+color+" con placas: "+placas})
+              }
+              else if(estado == "En curso"){
+                this.setState({texto:"Disfruta tu viaje"})
+              }
+              else if(estado == "Terminado"){
+                this.setState({texto:""})
+                Alert.alert('Tu viaje ha terminado');
+                Actions.reset('Home')
+              }
+            }
+            else {
+                error = 'Error'
+                console.log(error)
+            }
+          } 
+          catch (error) {
+            alert(error);
+          }
     }
 
-    async solicitar() {
+    componentDidMount(){
+      this.buscar()
+      
+      this.inter = setInterval(() => {this.buscar();},3000)
+    }
 
-        var moment = require('moment');
+    componentWillUnmount(){
 
-        //var startdate = moment();
-        //startdate = startdate.subtract(6, "hours");
-        //startdate = startdate.format("DD-MM-YYYY");
-        //console.log(startdate)
-        
+        clearInterval(this.inter)
+    }
 
-        var data = {
-          //'codigo': this.state.codigo,
-          'origen': this.state.origen,
-          'destino': this.state.destino,
-          'horaSolicitud': moment().format('YYYY-MM-DDTHH:mm:ss'),
-          'vehiculoId': "08d653cc-96c7-4959-88e1-3482ad13a524",
-          'clienteId': this.state.clienteId,
-          'numeroPasajeros': this.state.numeroPasajeros,
-          'formaPago': this.state.formaPago,
-          'estatus': this.state.estatus
-      }
-      console.log(moment().format('YYYY-MM-DDTHH:mm:ss'))
-      //console.log(moment().format(YYYY-MM-DD HH:mm:ss))
-      //console.log(data)
-      //return 
-  
-        if(this.state.codigo == ''){
-          Alert.alert('Hace que ingreses tu código de viaje');
-          return;
-        }
+    
 
-        if(this.state.origen == ''){
-          Alert.alert('Hace falta que ingreses el origen del viaje');
-          return;
-        }
-
-        if(this.state.destino == ''){
-          Alert.alert('Hace falta que ingreses el destino del viaje');
-          return;
-        }
-
-        if(this.state.numeroPasajeros == ''){
-          Alert.alert('Hace falta que indiques cuantos lugares necesitas');
-          return;
-        }
-        
-        try {
-          let response = await fetch('http://206.189.164.14:80/api/viajes', {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-          })
-          if (response.ok) {
-            Alert.alert('¡Viaje registrado!');
-            
-          }
-          else{
-            Alert.alert('Error inesperado, intenta de nuevo');
-          }
-        } catch (error) {
-          Alert.alert('Error');
-          console.error(error);
-        }
-      }
+ 
 
     _onpress(){
         //Alert.alert('You tapped the button!')
@@ -100,55 +74,11 @@ export default class miviaje extends Component{
     render(){
         return(
             <ImageBackground source={require('../assets/images/mapa.jpg')} style={{width: '100%', height: '100%',alignItems:'center'}}>
-                 <View style={styles.input}>
-                    <TextInput
-                    style={{fontSize:30, color:'#7A7A7A'}}
-                    placeholder="Codigo de viaje"
-                    placeholderTextColor='#7A7A7A'
-                    autoCapitalize='words'
-                    onChangeText={(codigo) => this.setState({codigo})}
-                    value={this.state.codigo}
-                    />
+
+                <View style={styles.input}>
+                    <Text style={{fontSize:20,textAlign:'center'}}>{this.state.texto}</Text>
                  </View>
 
-                 <View style={styles.input}>
-                    <TextInput
-                    style={{fontSize:30, color:'#7A7A7A'}}
-                    placeholder="Origen"
-                    placeholderTextColor='#7A7A7A'
-                    autoCapitalize='words'
-                    onChangeText={(origen) => this.setState({origen})}
-                    value={this.state.origen}
-                    />
-                 </View>
-
-                 <View style={styles.input}>
-                    <TextInput
-                    style={{fontSize:30, color:'#7A7A7A'}}
-                    placeholder="Destino"
-                    placeholderTextColor='#7A7A7A'
-                    autoCapitalize='words'
-                    onChangeText={(destino) => this.setState({destino})}
-                    value={this.state.destino}
-                    />
-                 </View>
-
-                 <View style={styles.input}>
-                    <TextInput
-                    style={{fontSize:30, color:'#7A7A7A'}}
-                    placeholder="Pasajeros"
-                    placeholderTextColor='#7A7A7A'
-                    keyboardType='numeric'
-                    onChangeText={(numeroPasajeros) => this.setState({numeroPasajeros})}
-                    value={this.state.numeroPasajeros}
-                    />
-                 </View>
-
-                 <View style={{marginTop: 300, backgroundColor: '#FFC336', width: 150, borderRadius: 20, alignItems: 'center'}}>
-                    <TouchableOpacity onPress={this.solicitar.bind(this)}>
-                        <Text style={{fontSize:30, color:'white'}}>Pedir</Text>
-                    </TouchableOpacity>
-                 </View>
             </ImageBackground>
         )
     }
@@ -161,14 +91,16 @@ export default class miviaje extends Component{
 const styles = StyleSheet.create({
   input: {
     backgroundColor:'white',
-    borderRadius: 40,
+    borderRadius: 20,
     borderWidth:2,
-    borderColor:'#53B4FF',
-    marginTop:10, 
-    width:250,
-    height:50,
+    borderColor:'#FFC336',
+    marginTop:120, 
+    width:300,
+    height:300,
     alignItems:'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    alignItems:'center',
+    margin:10
   }
 });
 

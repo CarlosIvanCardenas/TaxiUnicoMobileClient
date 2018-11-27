@@ -56,8 +56,6 @@ import { Actions } from "react-native-router-flux";
         Alert.alert('Error');
         console.error(error);
       }
-      //getPost()
-      //console.log()
     }
 
     render(){

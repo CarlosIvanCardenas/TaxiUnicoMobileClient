@@ -13,8 +13,11 @@ import { Actions } from "react-native-router-flux";
         }
     }
 
+    componentDidMount(){
+      console.log(this.props.user)
+    }
+
     async addcard() {
-        console.log(this.props.user)
       var data = {
         'clienteId': this.state.ID,
         'numeroTarjeta': this.state.numero_tarjeta,
@@ -47,7 +50,6 @@ import { Actions } from "react-native-router-flux";
         Alert.alert('Error');
         console.error(error);
       }
-      
     }
 
     render(){
@@ -57,47 +59,50 @@ import { Actions } from "react-native-router-flux";
           <View style={{backgroundColor: 'white', flex: 4,marginLeft:10}}>
             <View style={{flex:1, backgroundColor:'white',justifyContent:'center',borderBottomColor:'black',borderBottomWidth:2}}>
                 <View style={{backgroundColor:'white'}}>
-                    <Text style={styles.titulo}>Número de tarjeta:</Text>
+                  <Text style={styles.titulo}>Número de tarjeta:</Text>
                 </View>
+
                 <View style={{flexDirection:'row'}}>
-                    <View style={{backgroundColor:'white', margin:10}}>
+                  <View style={{backgroundColor:'white', margin:10}}>
                     <Image style={{width: 120,height: 80, borderRadius: 10}}
-                            source={require('../assets/images/visa.jpg')}
-                            />
-                    </View>
-                    <View style={{backgroundColor:'white', marginTop:50}}>
-                        <TextInput
-                        style={styles.llenar}
-                        placeholder="No. de tarjeta"
-                        placeholderTextColor='#53B4FF'
-                        keyboardType='numeric'
-                        onChangeText={(numero_tarjeta) => this.setState({numero_tarjeta})}
-                        value={this.state.numero_tarjeta}
-                        />
-                    </View>
+                      source={require('../assets/images/visa.jpg')}
+                    />
+                  </View>
+
+                  <View style={{backgroundColor:'white', marginTop:50}}>
+                    <TextInput
+                      style={styles.llenar}
+                      placeholder="No. de tarjeta"
+                      placeholderTextColor='#53B4FF'
+                      keyboardType='numeric'
+                      onChangeText={(numero_tarjeta) => this.setState({numero_tarjeta})}
+                      value={this.state.numero_tarjeta}
+                      />
+                  </View>
                 </View>
             </View>
+
             <View style={{backgroundColor:'white' ,flex:1, justifyContent:'center', marginTop:10,borderBottomColor:'black',borderBottomWidth:2}}>
-                <Text style={styles.titulo}>Fecha de expiración:</Text>
-                <TextInput
-                    style={styles.llenar}
-                    placeholder="MM/AA"
-                    placeholderTextColor='#53B4FF'
-                    onChangeText={(fecha_expiracion) => this.setState({fecha_expiracion})}
-                    value={this.state.fecha_expiracion}
+              <Text style={styles.titulo}>Fecha de expiración:</Text>
+              <TextInput
+                style={styles.llenar}
+                placeholder="MM/AA"
+                placeholderTextColor='#53B4FF'
+                onChangeText={(fecha_expiracion) => this.setState({fecha_expiracion})}
+                value={this.state.fecha_expiracion}
                 />
             </View>
+
             <View style={{backgroundColor:'white', flex:1,justifyContent:'center',marginTop:10,borderBottomColor:'black',borderBottomWidth:2}}>
-            <Text style={styles.titulo}>Codigo de verificación:</Text>
-                <TextInput
-                    style={styles.llenar}
-                    placeholder="CVC"
-                    placeholderTextColor='#53B4FF'
-                    onChangeText={(CVC) => this.setState({CVC})}
-                    value={this.state.CVC}
+              <Text style={styles.titulo}>Codigo de verificación:</Text>
+              <TextInput
+                style={styles.llenar}
+                placeholder="CVC"
+                placeholderTextColor='#53B4FF'
+                onChangeText={(CVC) => this.setState({CVC})}
+                value={this.state.CVC}
                 />
             </View>
-              
           </View>
 
           <View style={{flex:1, backgroundColor:'white', alignItems: 'center', justifyContent:'center'}}>
@@ -108,30 +113,13 @@ import { Actions } from "react-native-router-flux";
                 color='white'
               />
             </View>
-            </View>
+          </View>
         </View>
       )
     }
   }
 
-
 const styles = StyleSheet.create({
-  iniciosesion: {
-    fontWeight: 'bold',
-    color: 'white',
-    fontSize: 40,
-    textAlign: 'right',
-    lineHeight: 150,
-    marginRight: 24,
-    marginBottom: -25
-  },
-  iniciosesion1: {
-    fontWeight: 'bold',
-    color: 'white',
-    fontSize:30,
-    textAlign: 'center',
-    marginBottom:24
-  },
   titulo: {
     fontSize: 24,
     fontWeight:'bold'
